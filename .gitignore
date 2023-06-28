@@ -16,7 +16,10 @@ SerialController/Template/
 SerialController/profiles/
 SerialController/Controller_Log/
 SerialController/settings.poke
-SerialController/Commands/PythonCommands/
+SerialController/Commands/PythonCommands/*
+!SerialController/Commands/PythonCommands/Samples/
+SerialController/Commands/PythonCommands/ImageProcessingOnly/*
+!SerialController/Commands/PythonCommands/ImageProcessingOnly/Samples/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
