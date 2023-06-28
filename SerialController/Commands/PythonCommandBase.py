@@ -36,7 +36,6 @@ class StopThread(Exception):
 # Python command
 class PythonCommand(CommandBase.Command):
     def __init__(self):
-        print("test3")
         super(PythonCommand, self).__init__()
         self._logger = getLogger(__name__)
         self._logger.addHandler(NullHandler())
