@@ -10,6 +10,7 @@
 *.eep
 *.exe
 *.json
+*.bat
 .idea/
 SerialController/Captures/
 SerialController/Template/*
