@@ -12,12 +12,13 @@
 *.json
 .idea/
 SerialController/Captures/
-SerialController/Template/
+SerialController/Template/*
+!SerialController/Template/Samples/
 SerialController/profiles/
 SerialController/Controller_Log/
 SerialController/settings.poke
 SerialController/Commands/PythonCommands/*
-!SerialController/Commands/PythonCommands/Samples/*
+!SerialController/Commands/PythonCommands/Samples/
 !SerialController/Commands/PythonCommands/ImageProcessingOnly/
 SerialController/Commands/PythonCommands/ImageProcessingOnly/*
 !SerialController/Commands/PythonCommands/ImageProcessingOnly/Samples/

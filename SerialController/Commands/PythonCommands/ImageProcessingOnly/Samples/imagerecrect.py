@@ -14,7 +14,7 @@ class ImageRecRect(ImageProcPythonCommand):
 
     def do(self):
         for i in range(1):
-            result = self.isContainTemplate("shiny_mark.png", 0.7, show_value=True,
+            result = self.isContainTemplate("Samples/shiny_mark.png", 0.7, show_value=True,
                                             show_position=True,  # このオプションをFalseにすると枠が非表示になります
                                             show_only_true_rect=True,  # このオプションをFalseにすると、
                                             # 認識できなかった場合に最も近い部分に赤枠を表示します

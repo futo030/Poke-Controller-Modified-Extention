@@ -38,7 +38,7 @@ class AutoHatching(ImageProcPythonCommand):
                     self.hold([Direction.RIGHT, Direction.R_LEFT])
 
                     # turn round and round
-                    while not self.isContainTemplate('egg_notice.png'):
+                    while not self.isContainTemplate('Samples/egg_notice.png'):
                         self.wait(1)
 
                     print('egg hatching')
@@ -104,7 +104,7 @@ class AutoHatching(ImageProcPythonCommand):
 
     def getNewEgg(self):
         self.press(Button.A, wait=0.5)
-        if not self.isContainTemplate('egg_found.png'):
+        if not self.isContainTemplate('Samples/egg_found.png'):
             print('egg not found')
             self.finish()  # TODO
         print('egg found')
@@ -139,11 +139,11 @@ class AutoHatching(ImageProcPythonCommand):
             for j in range(0, col):
 
                 # if shiny, then stop
-                if self.isContainTemplate('shiny_mark.png', threshold=0.9):
+                if self.isContainTemplate('Samples/shiny_mark.png', threshold=0.9):
                     return True
 
                 # Maybe this threshold works for only Japanese version.
-                if self.isContainTemplate('status.png', threshold=0.7):
+                if self.isContainTemplate('Samples/status.png', threshold=0.7):
                     # Release a pokemon
                     self.Release()
 

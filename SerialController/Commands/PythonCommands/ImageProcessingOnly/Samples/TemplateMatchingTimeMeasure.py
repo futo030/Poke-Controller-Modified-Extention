@@ -24,23 +24,23 @@ class CalcTime(ImageProcPythonCommand):
             print("Measure Calc.Speed btw. CPU, GPU for {0} iter".format(iter))
             start = time.time()
             for i in range(iter):
-                result = self.isContainTemplate("shiny_mark1.png", 0.7, True, False)
+                result = self.isContainTemplate("Samples/shiny_mark1.png", 0.7, True, False)
             n = time.time() - start
             print("CPU, Gray: Total: {0}, Ave: {1}".format(n, n / iter))
             start = time.time()
             for i in range(iter):
-                result = self.isContainTemplate("shiny_mark1.png", 0.7, False, False)
+                result = self.isContainTemplate("Samples/shiny_mark1.png", 0.7, False, False)
             n = time.time() - start
             print("CPU, Color: Total: {0}, Ave: {1}".format(n, n / iter))
 
             start = time.time()
             for i in range(iter):
-                result = self.isContainTemplateGPU("shiny_mark1.png", 0.7, True, False)
+                result = self.isContainTemplateGPU("Samples/shiny_mark1.png", 0.7, True, False)
             n = time.time() - start
             print("GPU, Gray: Total: {0}, Ave: {1}".format(n, n / iter))
             start = time.time()
             for i in range(iter):
-                result = self.isContainTemplateGPU("shiny_mark1.png", 0.7, False, False)
+                result = self.isContainTemplateGPU("Samples/shiny_mark1.png", 0.7, False, False)
             n = time.time() - start
             print("GPU, Color: Total: {0}, Ave: {1}".format(n, n / iter))
 
@@ -48,7 +48,7 @@ class CalcTime(ImageProcPythonCommand):
 # print("Total: {0}, Ave: {1}".format(n, n / 300))
 # start = time.time()
 # for i in range(300):
-# 	self.isContainTemplate("shiny_mark.png", 0.8, False, False)
+# 	self.isContainTemplate("Samples/shiny_mark.png", 0.8, False, False)
 # n = time.time() - start
 # print("テンプレートマッチング　カラー")
 # print("Total: {0}, Ave: {1}".format(n, n / 300))

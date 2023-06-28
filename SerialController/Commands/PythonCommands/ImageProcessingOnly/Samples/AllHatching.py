@@ -25,7 +25,7 @@ class AllHatching(ImageProcPythonCommand):
             self.hold([Direction.RIGHT, Direction.R_LEFT])
 
             # turn round and round
-            while not self.isContainTemplate('egg_notice.png'):
+            while not self.isContainTemplate('Samples/egg_notice.png'):
                 self.wait(1)
 
             print('egg hatching')

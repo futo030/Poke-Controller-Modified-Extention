@@ -32,7 +32,7 @@ class Fossil_shiny(ImageProcPythonCommand):
                 self.press(Button.A, wait=0.75)  # determine fossil
 
                 self.press(Button.A, wait=0.75)  # select "それでよければ"
-                while not self.isContainTemplate('Network_Offline.png', 0.8):
+                while not self.isContainTemplate('Samples/Network_Offline.png', 0.8):
                     self.press(Button.B, wait=0.5)
                 self.wait(1.0)
 
@@ -54,10 +54,10 @@ class Fossil_shiny(ImageProcPythonCommand):
             self.press(Button.A, wait=2.5)  # closed
             self.press(Button.A, wait=2.0)  # Choose game
             self.press(Button.A)  # User selection
-            while not self.isContainTemplate('OP.png', 0.7):  # recognize Opening
+            while not self.isContainTemplate('Samples/OP.png', 0.7):  # recognize Opening
                 self.wait(0.2)
             self.press(Button.A)  # load save-data
-            while not self.isContainTemplate('Network_Offline.png', 0.8):
+            while not self.isContainTemplate('Samples/Network_Offline.png', 0.8):
                 self.wait(0.5)
             self.wait(1.0)
             i += 1
@@ -68,10 +68,10 @@ class Fossil_shiny(ImageProcPythonCommand):
         for i in range(0, row):
             for j in range(0, col):
                 # if shiny, then stop
-                if self.isContainTemplate('shiny_mark.png', threshold=0.9):
+                if self.isContainTemplate('Samples/shiny_mark.png', threshold=0.9):
                     return True
                 # Maybe this threshold works for only Japanese version.
-                if self.isContainTemplate('status.png', threshold=0.7):
+                if self.isContainTemplate('Samples/status.png', threshold=0.7):
                     pass
                 if not j == col - 1:
                     if i % 2 == 0:
