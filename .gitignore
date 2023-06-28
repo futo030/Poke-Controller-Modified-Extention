@@ -18,6 +18,8 @@ SerialController/Controller_Log/
 SerialController/settings.poke
 SerialController/Commands/PythonCommands/*
 !SerialController/Commands/PythonCommands/Samples/
+!SerialController/Commands/PythonCommands/Image/ImageProcessingOnly/
+SerialController/Commands/PythonCommands/Image/ImageProcessingOnly/*
 !SerialController/Commands/PythonCommands/ImageProcessingOnly/Samples/
 
 # Byte-compiled / optimized / DLL files
