@@ -32,7 +32,6 @@ import PokeConLogger
 import Utility as util
 from Commands import McuCommandBase, PythonCommandBase, Sender
 from Commands.Keys import KeyPress
-from Commands.ProController import ProController
 from Commands.CommandBase import Command
 
 addpath = dirname(dirname(dirname(abspath(__file__))))	#SerialControllerフォルダのパス
@@ -62,8 +61,6 @@ class PokeControllerApp:
 
         self.camera_dic = None
         self.Line = None
-
-        self.procon = None
 
         self.pokeconname = NAME
         self.pokeconversion = VERSION[4:]
@@ -256,19 +253,6 @@ class PokeControllerApp:
         self.right_stick_mouse_checkbox.configure(command=self.activate_Right_stick_mouse)
         self.software_lf.configure(height='200', text='Software')
         self.software_lf.grid(padx='5', sticky='ew')
-        self.hardware_lf = ttk.Labelframe(self.manual_control_f)
-        self.use_pro_controller_checkbox = ttk.Checkbutton(self.hardware_lf)
-        self.is_use_Pro_Controller = tk.BooleanVar()    # modified
-        self.use_pro_controller_checkbox.configure(text='Use Pro Controller', variable=self.is_use_Pro_Controller)
-        self.use_pro_controller_checkbox.grid(column='0', padx='5', pady='5', row='0', sticky='ew')
-        self.use_pro_controller_checkbox.configure(command=self.mode_change_Pro_Controller)
-        self.record_pro_controller_checkbox = ttk.Checkbutton(self.hardware_lf)
-        self.is_record_Pro_Controller = tk.BooleanVar() # modified
-        self.record_pro_controller_checkbox.configure(text='Record Pro Controller', variable=self.is_record_Pro_Controller)
-        self.record_pro_controller_checkbox.grid(column='1', padx='5', pady='5', row='0', sticky='ew')
-        self.record_pro_controller_checkbox.configure(command=self.record_Pro_Controller)
-        self.hardware_lf.configure(height='200', text='Hardware', width='200')
-        self.hardware_lf.grid(column='0', padx='5', row='1', sticky='ew')
         self.manual_control_f.configure(height='200', width='200')
         self.manual_control_f.pack()
         self.controller_nb.add(self.manual_control_f, padding='5', text='Manual Control')
@@ -466,8 +450,6 @@ class PokeControllerApp:
         self.use_keyboard_checkbox_tooltip = ToolTip(self.use_keyboard_checkbox, "キーボードで操作する機能を有効化します")
         self.left_stick_mouse_checkbox_tooltip = ToolTip(self.left_stick_mouse_checkbox, "ゲーム画面上で左クリックを押下した後、その状態でマウスを動かすことで左stickを動かす機能を有効化します")
         self.right_stick_mouse_checkbox_tooltip = ToolTip(self.right_stick_mouse_checkbox, "ゲーム画面上で右クリックを押下した後、その状態でマウスを動かすことで右stickを動かす機能を有効化します")
-        self.use_pro_controller_checkbox_tooltip = ToolTip(self.use_pro_controller_checkbox, "pcに接続したproconでswitchを操作する機能を有効化します")
-        self.record_pro_controller_checkbox_tooltip = ToolTip(self.record_pro_controller_checkbox, "proconで操作している際のログを記録する機能を有効化します")
         self.py_cb_tooltip = ToolTip(self.py_cb, "実行するスクリプト(python)")
         self.mcu_cb_tooltip = ToolTip(self.mcu_cb, "実行するスクリプト(mcu)")
         self.open_command_dir_button_tooltip = ToolTip(self.open_command_dir_button, "スクリプト(.py)を保存するディレクトリを開きます")
@@ -855,50 +837,12 @@ class PokeControllerApp:
     def activate_Right_stick_mouse(self):
         self.preview.ApplyRStickMouse()
 
-    def run_ProController(self):
-        if self.procon is not None:
-            self.procon = None
-        self.procon = ProController()
-        self.procon.controller_loop(self.ser, self.flag_record, self.ControllerLogDir)
-
     def mode_change_show_guide(self):
         Command.isGuide = self.is_show_guide.get()
 
     def mode_change_show_image(self):
         Command.isImage = self.is_show_image.get()
 
-    def mode_change_Pro_Controller(self):
-        if self.is_use_Pro_Controller.get():    # Proconでの操作を有効化する。
-            try:
-                self.closingController()
-            except:
-                pass
-            ProController.flag_procon = True
-            self.flag_record = self.is_record_Pro_Controller.get()
-            self.ControllerLogDir = "Controller_Log"
-            self.record_pro_controller_checkbox["state"] = 'disabled'
-            thread1 = threading.Thread(target=self.run_ProController)
-            thread1.start()
-            self.controller_nb.tab(tab_id=0, state='disabled')
-            self.controller_nb.tab(tab_id=1, state='disabled')
-            self.controller_nb.tab(tab_id=3, state='disabled')
-            self.controller_nb.tab(tab_id=4, state='disabled')
-            self.start_top_button["state"] = 'disabled'
-            self.simplecon_top_button["state"] = 'disabled'
-
-        else:   # Proconでの操作を無効化する。
-            ProController.flag_procon = False
-            self.record_pro_controller_checkbox["state"] = 'normal'
-            self.controller_nb.tab(tab_id=0, state='normal')
-            self.controller_nb.tab(tab_id=1, state='normal')
-            self.controller_nb.tab(tab_id=3, state='normal')
-            self.controller_nb.tab(tab_id=4, state='normal')
-            self.start_top_button["state"] = 'normal'
-            self.simplecon_top_button["state"] = 'normal'
-
-    def record_Pro_Controller(self):
-        self.flag_record = self.is_record_Pro_Controller.get()
-        
     # def createGetFromHomeWindow(self):
     #     if self.poke_treeview is not None:
     #         self.poke_treeview.focus_force()
@@ -1076,8 +1020,6 @@ class PokeControllerApp:
             print('No commands have been assigned yet.')
             self._logger.info('No commands have been assigned yet.')
 
-        self.is_use_Pro_Controller.set(False)
-        self.mode_change_Pro_Controller()
         # set and init selected command
         self.assignCommand()
 
@@ -1102,8 +1044,6 @@ class PokeControllerApp:
             print('No commands have been assigned yet.')
             self._logger.info('No commands have been assigned yet.')
 
-        self.is_use_Pro_Controller.set(False)
-        self.mode_change_Pro_Controller()
         # set and init selected command
         flag = self.assignShortcutCommand(num)
         if flag:
@@ -1164,11 +1104,6 @@ class PokeControllerApp:
 
     def exit(self):
 
-        # 一度proconのスレッドを落とす
-        self.flag_procon = False
-        self.record_pro_controller_checkbox["state"] = 'normal'
-        self.is_use_Pro_Controller.set(False)
-        
         ret = tkmsg.askyesno('確認', 'Poke Controllerを終了しますか？')
         if ret:
             if self.ser.isOpened():

@@ -68,7 +68,7 @@ class PythonCommand(CommandBase.Command):
         表示対象は自動化スクリプト側でselfにて定義した変数のみです。
         '''
         var_dict = vars(self) # 重い
-        del_dict = ['isRunning', 'message_dialogue', 'socket0', 'mqtt0', 'keys', 'thread', 'alive', 'postProcess', 'Line', '_logger', 'camera', 'gui', 'ImgProc']
+        del_dict = ['isRunning', 'message_dialogue', 'keys', 'thread', 'alive', 'postProcess', 'Line', '_logger', 'camera', 'gui', 'ImgProc']
         print("--------内部変数一覧--------")
         for k, v in var_dict.items():
             if k not in del_dict:
@@ -111,8 +111,6 @@ class PythonCommand(CommandBase.Command):
         自動化スクリプトをスレッドに割り当てて実行します。
         '''
         self.alive = True
-        self.socket0.alive = True
-        self.mqtt0.alive = True
         self.postProcess = postProcess
         ImageProcPythonCommand.template_path_name = "./Template/"
         if not self.thread:
@@ -120,8 +118,6 @@ class PythonCommand(CommandBase.Command):
             self.thread.start()
 
     def end(self, ser: Sender):
-        self.socket0.alive = False
-        self.mqtt0.alive = False
         self.sendStopRequest()
 
     def sendStopRequest(self):
@@ -138,8 +134,6 @@ class PythonCommand(CommandBase.Command):
         自動化スクリプトを終了します。(自動化スクリプト内で意図的に終了したい場合に使用。)
         '''
         self.alive = False
-        self.socket0.alive = False
-        self.mqtt0.alive = False
         self.end(self.keys.ser)
 
     # press button at duration times(s)
