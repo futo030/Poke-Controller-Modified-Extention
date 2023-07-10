@@ -79,6 +79,16 @@ windows-capture-device-list (Python 3.10以上で使用する場合のみ)
 gitpython
 ```
 
+## 推奨環境
+- OS
+  - Windows10
+  - (一応Mac/Linuxでも動作するはずだが未確認)
+- Python
+  - 3.7以上
+
+## 開発環境
+Python 3.7.9
+
 以下はMoi-Poke様のMODIFIED版の説明になります。
 - - -
 

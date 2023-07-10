@@ -1,3 +1,14 @@
+■ver.0.0.2a
+  ・Version番号を3桁に変更
+  ・PokeconDialogue.py更新
+    ・dialogue6widget関数の複数列化に対応(詳細はwidget-sample.pyを参照すること
+  ・ImageProcessing.pyバグ修正
+    ・マスク画像を指定した場合にテンプレートマッチングのmethodが正しく設定されないバグを修正
+  ・Linux対応バグ修正
+    ・Use Keyboardが切り替えられないバグを修正
+  ・その他
+    ・modified版へのprに伴う修正/追記を実施
+
 ■ver.0.0.0.0.2
   ・Window.py修正
     ・メニューバーにヘルプを追加

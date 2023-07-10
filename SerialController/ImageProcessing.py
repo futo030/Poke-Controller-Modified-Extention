@@ -164,7 +164,7 @@ class ImageProcessing:
             mask = None
 
         # 比較方式を設定する
-        method = cv2.TM_CCORR_NORMED if mask_path != None else cv2.TM_CCOEFF_NORMED
+        method = cv2.TM_CCORR_NORMED if type(mask_image) == numpy.ndarray else cv2.TM_CCOEFF_NORMED
 
         # テンプレートマッチングをする
         if self.__use_gpu:    # GPUを使用する場合(マスク非対応)

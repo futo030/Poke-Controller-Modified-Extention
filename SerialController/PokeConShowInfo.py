@@ -11,6 +11,12 @@ import platform
 import Window
 import pkg_resources
 
+# ソースコードの見た目がよくないので、こっちで定義する。
+QUESTION_TITLE = '''--------------------------質問をする際の注意事項--------------------------
+・質問の前に自分なりにドキュメントを読むなど各自調査を実施してください。
+・項目すべてを記入してください。(空白がある場合、OKを押しても何も起きません。)
+・個人を誹謗中傷するような記述はしないでください。'''
+
 class PokeConQuestionDialogue(object):
     """
     pokeconに対する問い合わせ用文章を出力する
@@ -20,10 +26,7 @@ class PokeConQuestionDialogue(object):
         self.isOK = None
 
         message = ["プログラム名：", "制作者様：", "質問内容(経緯などは簡潔に)", "試したこと(詳しく)"]
-        title = "--------------------------質問をする際の注意事項--------------------------\n"\
-                "・質問の前に自分なりにドキュメントを読むなど各自調査を実施してください。\n"\
-                "・項目すべてを記入してください。(空白がある場合、OKを押しても何も起きません。)\n"\
-                "・個人を誹謗中傷するような記述はしないでください。"      
+        title = QUESTION_TITLE
 
         # 最終実行コマンドから情報取得
         try:
@@ -99,19 +102,22 @@ class PokeConQuestionDialogue(object):
 
     def output_text(self):
         if self.isOK:
-            print('---------------------------ここからコピペ---------------------------')
-            print("■プログラム名\n" + self._ls[0])
-            print("■製作者様\n" + self._ls[1])
-            print("■使用ツール\n" + Window.NAME + ' ' + Window.VERSION)
+            txt = '---------------------------ここからコピペ---------------------------\n'
+            txt += f'■プログラム名\n"{self._ls[0]}\n'
+            txt += f'■製作者様\n{self._ls[1]}\n'
+            txt += f'■使用ツール\n{Window.NAME} {Window.VERSION}\n'
+
+            
             if platform.system() == 'Darwin':
                 #MacOS
-                print("■OS\n" + platform.mac_ver() + "(Mac)")
+                txt += f'■OS\n{platform.mac_ver()}(Mac)\n'
             else:
-                print("■OS\n" + platform.platform())
-            print("■Python version\n" + sys.version.split(" ")[0])
-            print("■質問内容(詳しくご記述ください。)\n" + self._ls[2])
-            print("■試したこと(詳しくご記述ください。)\n" + self._ls[3])
-            print('---------------------------ここまでコピペ---------------------------')
+                txt += f'■OS\n{platform.platform()}\n'
+            txt += f'■Python version\n{sys.version.split(" ")[0]}\n'
+            txt += f'■質問内容(詳しくご記述ください。)\n{self._ls[2]}\n'
+            txt += f'■試したこと(詳しくご記述ください。)\n{self._ls[3]}\n'
+            txt += '---------------------------ここまでコピペ---------------------------'
+            print(txt)
             checktext = "添付資料を準備してください。(以下は一例です。)\n"\
                         "・動作の動画\n"\
                         "・Poke-Conのログ\n"\

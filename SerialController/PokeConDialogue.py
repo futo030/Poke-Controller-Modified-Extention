@@ -97,62 +97,73 @@ class PokeConDialogue(object):
                 else:
                     scale_label_list[i]["text"] = "%s" % self.dialogue_ls[dialogue_list[index][1]].get()
 
+        column0 = 0
+        row0 = 0
         for i in range(n):
-            # widgetはすべてframeの中に入れる。scaleの場合、値を示すlabelもフレームの中に入れる。
-            frame.append(ttk.LabelFrame(self.inputs, text=dialogue_list[i][1]))
+            if dialogue_list[i][0].casefold() == "next".casefold():
+                column0 += 1
+                row0 = 0
+                frame.append(None)
+            else:
+                # widgetはすべてframeの中に入れる。scaleの場合、値を示すlabelもフレームの中に入れる。
+                frame.append(ttk.LabelFrame(self.inputs, text=dialogue_list[i][1]))
 
-            # Checkbox
-            if dialogue_list[i][0].casefold() == "check".casefold():
-                self.dialogue_ls[dialogue_list[i][1]] = tk.BooleanVar(value=dialogue_list[i][2])
-                widget = ttk.Checkbutton(frame[i], variable=self.dialogue_ls[dialogue_list[i][1]])
-                widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
-            # Combobox
-            elif dialogue_list[i][0].casefold() == "combo".casefold():
-                self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][3])
-                widget = ttk.Combobox(frame[i], values=dialogue_list[i][2], textvariable=self.dialogue_ls[dialogue_list[i][1]])
-                widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
-                # widget.current(0)
-            # Entry
-            elif dialogue_list[i][0].casefold() == "entry".casefold():
-                self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][2])
-                widget = ttk.Entry(frame[i], textvariable=self.dialogue_ls[dialogue_list[i][1]])
-                widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
-            # Radiobutton
-            elif dialogue_list[i][0].casefold() == "radio".casefold():
-                self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][3])
-                for j, text0 in enumerate(dialogue_list[i][2]):
-                    widget = ttk.Radiobutton(frame[i], text=text0, variable=self.dialogue_ls[dialogue_list[i][1]], value=text0)
-                    widget.grid(column=j, row=0, sticky='nsew', padx=3, pady=3)
-            # Scale
-            elif dialogue_list[i][0].casefold() == "scale".casefold():
-                scale_index_list.append(i)
-                scale_digit_list.append(dialogue_list[i][5])
-                if dialogue_list[i][5] != 0:    # 浮動小数点数
-                    self.dialogue_ls[dialogue_list[i][1]] = tk.DoubleVar(value=dialogue_list[i][4])
-                    scale_label_list.append(tk.Label(frame[i], width=10, text="%s" % round(self.dialogue_ls[dialogue_list[i][1]].get(), dialogue_list[i][5])))
-                else:   # 整数
-                    self.dialogue_ls[dialogue_list[i][1]] = tk.IntVar(value=dialogue_list[i][4])
-                    scale_label_list.append(tk.Label(frame[i], width=10, text="%s" % self.dialogue_ls[dialogue_list[i][1]].get()))
-                widget = ttk.Scale(frame[i], from_=dialogue_list[i][2], to=dialogue_list[i][3], variable=self.dialogue_ls[dialogue_list[i][1]], command=change_scale_value)
-                scale_label_list[-1].grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
-                widget.grid(column=1, row=0, sticky='nsew', padx=3, pady=3)
-            # Spinbox
-            elif dialogue_list[i][0].casefold() == "spin".casefold():
-                self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][3])
-                widget = ttk.Spinbox(frame[i], values = dialogue_list[i][2], textvariable=self.dialogue_ls[dialogue_list[i][1]])
-                widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
+                # Checkbox
+                if dialogue_list[i][0].casefold() == "check".casefold():
+                    self.dialogue_ls[dialogue_list[i][1]] = tk.BooleanVar(value=dialogue_list[i][2])
+                    widget = ttk.Checkbutton(frame[i], variable=self.dialogue_ls[dialogue_list[i][1]])
+                    widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
+                # Combobox
+                elif dialogue_list[i][0].casefold() == "combo".casefold():
+                    self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][3])
+                    widget = ttk.Combobox(frame[i], values=dialogue_list[i][2], textvariable=self.dialogue_ls[dialogue_list[i][1]])
+                    widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
+                    # widget.current(0)
+                # Entry
+                elif dialogue_list[i][0].casefold() == "entry".casefold():
+                    self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][2])
+                    widget = ttk.Entry(frame[i], textvariable=self.dialogue_ls[dialogue_list[i][1]])
+                    widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
+                # Radiobutton
+                elif dialogue_list[i][0].casefold() == "radio".casefold():
+                    self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][3])
+                    for j, text0 in enumerate(dialogue_list[i][2]):
+                        widget = ttk.Radiobutton(frame[i], text=text0, variable=self.dialogue_ls[dialogue_list[i][1]], value=text0)
+                        widget.grid(column=j, row=0, sticky='nsew', padx=3, pady=3)
+                # Scale
+                elif dialogue_list[i][0].casefold() == "scale".casefold():
+                    scale_index_list.append(i)
+                    scale_digit_list.append(dialogue_list[i][5])
+                    if dialogue_list[i][5] != 0:    # 浮動小数点数
+                        self.dialogue_ls[dialogue_list[i][1]] = tk.DoubleVar(value=dialogue_list[i][4])
+                        scale_label_list.append(tk.Label(frame[i], width=10, text="%s" % round(self.dialogue_ls[dialogue_list[i][1]].get(), dialogue_list[i][5])))
+                    else:   # 整数
+                        self.dialogue_ls[dialogue_list[i][1]] = tk.IntVar(value=dialogue_list[i][4])
+                        scale_label_list.append(tk.Label(frame[i], width=10, text="%s" % self.dialogue_ls[dialogue_list[i][1]].get()))
+                    widget = ttk.Scale(frame[i], from_=dialogue_list[i][2], to=dialogue_list[i][3], variable=self.dialogue_ls[dialogue_list[i][1]], command=change_scale_value)
+                    scale_label_list[-1].grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
+                    widget.grid(column=1, row=0, sticky='nsew', padx=3, pady=3)
+                # Spinbox
+                elif dialogue_list[i][0].casefold() == "spin".casefold():
+                    self.dialogue_ls[dialogue_list[i][1]] = tk.StringVar(value=dialogue_list[i][3])
+                    widget = ttk.Spinbox(frame[i], values = dialogue_list[i][2], textvariable=self.dialogue_ls[dialogue_list[i][1]])
+                    widget.grid(column=0, row=0, sticky='nsew', padx=3, pady=3)
 
-            frame[i].grid(column=0, row=i, sticky='nsew', padx=3, pady=3)
+                frame[i].grid(column=column0, row=row0, sticky='nsew', padx=3, pady=3)
+                row0 += 1
 
         # widgetのサイズをフレームのサイズに合わせる
         for i in range(n):
-            if dialogue_list[i][0].casefold() == "scale".casefold():
-                frame[i].grid_columnconfigure(0, weight=1)
-                frame[i].grid_columnconfigure(1, weight=3)
-            elif dialogue_list[i][0].casefold() != "radio".casefold():
-                frame[i].grid_columnconfigure(0, weight=1)
-            else:
+            if dialogue_list[i][0].casefold() == "next".casefold():
                 pass
+            else:
+                if dialogue_list[i][0].casefold() == "scale".casefold():
+                    frame[i].grid_columnconfigure(0, weight=1)
+                    frame[i].grid_columnconfigure(1, weight=3)
+                elif dialogue_list[i][0].casefold() != "radio".casefold():
+                    frame[i].grid_columnconfigure(0, weight=1)
+                else:
+                    pass
 
     def ret_value(self, need: type) -> list | dict:
         if self.isOK:

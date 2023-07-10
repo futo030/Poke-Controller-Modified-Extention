@@ -36,6 +36,7 @@ class GuiSettings:
         self.fps = tk.StringVar(value=self.setting['General Setting']['fps'])
         self.show_size = tk.StringVar(value=self.setting['General Setting'].get('show_size'))
         self.is_show_realtime = tk.BooleanVar(value=self.setting['General Setting'].getboolean('is_show_realtime'))
+        self.is_show_value = tk.BooleanVar(value=self.setting['General Setting'].getboolean('is_show_value'))
         self.is_show_guide = tk.BooleanVar(value=self.setting['General Setting'].getboolean('is_show_guide'))
         self.is_show_serial = tk.BooleanVar(value=self.setting['General Setting'].getboolean('is_show_serial'))
         self.is_use_keyboard = tk.BooleanVar(value=self.setting['General Setting'].getboolean('is_use_keyboard'))
@@ -72,6 +73,7 @@ class GuiSettings:
             'fps': 45,
             'show_size': '640x360',
             'is_show_realtime': True,
+            'is_show_value': False,
             'is_show_guide': False,
             'is_show_serial': False,
             'is_use_keyboard': True,
@@ -149,6 +151,7 @@ class GuiSettings:
             'fps': self.fps.get(),
             'show_size': self.show_size.get(),
             'is_show_realtime': self.is_show_realtime.get(),
+            'is_show_value': self.is_show_value.get(),
             'is_show_guide': self.is_show_guide.get(),
             'is_show_serial': self.is_show_serial.get(),
             'is_use_keyboard': self.is_use_keyboard.get(),
