@@ -203,7 +203,7 @@ class ImageProcessing:
             self.__gresult = matcher.match(self.__gsrc, self.__gtmpl)
             res = self.gresult.download()
         else:
-            res = cv2.matchTemplate(image, template_image, method, mask_image)
+            res = cv2.matchTemplate(image, template_image, method, mask=mask_image)
         _, max_val, _, max_loc = cv2.minMaxLoc(res)  # 結果から類似度と類似度が最大となる場所を抽出
 
         return max_val, max_loc
